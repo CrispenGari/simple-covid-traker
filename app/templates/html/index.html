@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {%block title%} Home {%endblock%} {%block content%}
+<div class="app">
+  <div class="app__map">{{cmap | safe}}</div>
+
+  <div class="app__table">
+    <h1>covid stats in south africa</h1>
+    <table border="1">
+      <thead>
+        {% for row in data %} {% if loop.first %}
+        <tr>
+          <th>{{row[0]}}</th>
+          <th>{{row[1]}}</th>
+          <th>{{row[2]}}</th>
+          <th>{{row[3]}}</th>
+        </tr>
+        {% endif %} {% endfor%}
+      </thead>
+      <tbody>
+        {% for row in data %} {%if loop.first == False %}
+        <tr>
+          <td>{{row[0]}}</td>
+          <td>{{row[1]}}</td>
+          <td>{{row[2]}}</td>
+          <td>{{row[3]}}</td>
+        </tr>
+        {% endif %} {% endfor%}
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">
+    corona virus is dangerous, stay at home, sanitize and wear your masks.
+  </div>
+</div>
+
+{%endblock%}
