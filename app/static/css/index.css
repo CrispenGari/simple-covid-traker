@@ -19,14 +19,20 @@ body {
   color: white;
   width: 100vw;
   height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.app__map__chat {
+  width: 100%;
+  display: flex;
 }
 .app__map {
   padding: 0 20px;
-  border-radius: 10px;
+  border-radius: 100px;
   width: 100%;
-  max-width: 1000px;
   margin: 0px auto;
   padding-top: 5px !important;
+  position: relative;
 }
 header {
   display: flex;
@@ -37,16 +43,35 @@ header {
   margin: 0px auto;
 }
 header > img {
-  width: 100px;
+  width: 200px;
   object-fit: contain;
+  position: absolute;
+  left: 0px;
+  top: 50px;
+  margin: 0 0 20px;
 }
+
 header > h1 {
-  background-image: linear-gradient(to right, red, green);
+  background-image: linear-gradient(to right, rgb(36, 31, 31), rgb(19, 26, 19));
   color: transparent;
   -webkit-background-clip: text;
   font-weight: 500;
   font-size: 1.2rem;
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  width: 500px;
+  top: 40px;
 }
+
+.video-bg {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+}
+
 .app__table {
   color: white;
   padding: 20px;
@@ -111,4 +136,104 @@ header > h1 {
   color: gray;
   font-size: 0.9rem;
   text-align: center;
+}
+
+body {
+  background-color: #f1f1f1;
+}
+
+.nav-main {
+  overflow: hidden;
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+}
+
+.button {
+  width: 50px;
+  height: 100%;
+  background-color: #fff;
+  background-image: url("C:\Users\Zandile Myendeki\OneDrive\Desktop\covid-tracker\app\static\images\menu.jpg");
+  background-repeat: no-repeat;
+  background-size: 40%;
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+}
+
+.button:hover {
+  opacity: 0.5;
+}
+
+/* nav header */
+.nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 16px;
+  list-style: none;
+}
+.nav > ul > li {
+  font-size: 1.1rem;
+  font-weight: 400;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.5s;
+}
+.nav > ul > li:first-of-type {
+  color: cornflowerblue !important;
+}
+.nav > ul > li:hover {
+  color: cornflowerblue;
+  text-decoration: underline cornflowerblue;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  padding: 10px;
+  top: 0;
+  z-index: 20;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid lightblue;
+}
+
+.nav__right {
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+}
+.nav__right > h1 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: cornflowerblue;
+}
+/* chat canvas */
+.chart {
+  width: 100%;
+  height: 100vh;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.app__chart {
+  width: 100%;
+  margin: 0px auto;
+  height: 100vh;
+}
+.app__chart > h1 {
+  color: #000;
+}
+#chart-type-one {
+  display: none;
+}
+@media only screen and (max-width: 1000px) {
+  .app__map__chat {
+    flex-direction: column !important;
+  }
 }

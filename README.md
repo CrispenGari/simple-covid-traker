@@ -39,11 +39,13 @@ pip install flask
 ```shell
 pip install folium
 ```
+
 3. pandas
 
 ```shell
 pip install pandas
 ```
+
 4. request
 
 ```shell
@@ -51,7 +53,31 @@ pip install requests
 ```
 
 5. beautifulsoup
+
 ```shell
 pip install beautifulsoup4
 ```
-### Project workflow.
+
+### Requirements
+
+Packages that are required for this project was extracted using the following command:
+
+```shell
+pip freeze > requirements.txt
+```
+
+### Installing packages in the `requirements.txt` file
+
+```shell
+pip install -r requirements.txt
+```
+
+### Data visualization
+
+For data visualization in the DOM using the flask templates, we are going to use the [chart.js](https://www.chartjs.org/) which is an open source javascript library for displaying charts on canvases.
+
+We are going to add the following CDN in the `base.html` file.
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+```

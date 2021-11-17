@@ -17,7 +17,7 @@ class CovidData:
         # find all the table rows and grab their data
         self.trs = self.soup.find_all("tr")
         self.df = pd.read_csv(os.path.join(os.getcwd(), "files/SouthAfricanCities.csv"), encoding='latin-1')
-    
+
     def get_provinces_coords(self, apply_filter_on_unknown:bool =False)-> list:
         """
         get a dictionary of provinces with their long and lat coords

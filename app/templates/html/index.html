@@ -1,9 +1,17 @@
-{% extends 'base.html' %} {%block title%} Home {%endblock%} {%block content%}
+{% extends 'base.html' %} {%block title%} Covid-19 Interactive Dashboard
+{%endblock%} {%block content%}
 <div class="app">
-  <div class="app__map">{{cmap | safe}}</div>
+  <div class="app__map__chat">
+    <div class="app__map">{{cmap | safe}}</div>
+    <div class="app__chart">
+      <h1>Summary on covid-19 Statistics in South Africa</h1>
+      <canvas id="bar-chart" class="chart"></canvas>
+      <canvas id="pie-chart" class="chart"></canvas>
+    </div>
+  </div>
 
   <div class="app__table">
-    <h1>covid stats in south africa</h1>
+    <h1>Covid-19 statistics in South Africa</h1>
     <table border="1">
       <thead>
         {% for row in data %} {% if loop.first %}
@@ -28,7 +36,7 @@
     </table>
   </div>
   <div class="footer">
-    corona virus is dangerous, stay at home, sanitize and wear your masks.
+    Corona virus is dangerous, stay at home, sanitize and wear your masks.
   </div>
 </div>
 

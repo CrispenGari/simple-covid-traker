@@ -8,13 +8,293 @@
       rel="stylesheet"
       href="{{url_for('static', filename='css/index.css')}}"
     />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/index.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"
+    />
     <title>{% block title%}{% endblock %}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
   </head>
   <body>
-    <header>
+    <!-- <header>
       <img src="{{url_for('static', filename='images/logo.jpg')}}" alt="logo" />
       <h1>Dashboard</h1>
-    </header>
-    {%block content%} {%endblock%}
+    </header> -->
+
+    <!-- <section class="showcase">
+      <header> -->
+    <!-- <div class="toggle"></div> -->
+    <!-- <img
+          src="{{url_for('static', filename='images/logo.jpg')}}"
+          alt="logo"
+        /> -->
+    <!-- <h1>COVID-19 Dashboard South Africa</h1>
+      </header> -->
+
+    <!-- <video class="video-bg" autoplay muted loop>
+        <source src="{{url_for('static', filename='video/covid-19 video.mp4')}}"
+        type=video/mp4>
+      </video> -->
+    <!-- <div class="overlay"></div> -->
+
+    <!-- <div class="wrapper">
+        <div class="md">
+          <ul>
+            <li><i class="fa fa-facebook" aria-hidden="true"></i></li>
+            <li><i class="fa fa-instagram" aria-hidden="true"></i></li>
+            <li><i class="fa fa-twitter" aria-hidden="true"></i></li>
+            <li><i class="fa fa-youtube" aria-hidden="true"></i></li>
+          </ul>
+        </div>
+      </div> -->
+    <!-- </section> -->
+    <nav class="nav">
+      <ul>
+        <li>Home</li>
+        <li>Covid-19 News</li>
+        <li>About</li>
+        <li>Contact</li>
+      </ul>
+      <div class="nav__right">
+        <h1>select province</h1>
+        <select id="province">
+          <option value="ALL PROVINCES">ALL PROVINCES</option>
+          {% for item in provinces %}
+          <option value="{{item}}" }>{{item}}</option>
+          {% endfor %}
+        </select>
+        <select id="chart-type-one">
+          <option value="PIE">PIE</option>
+          <option value="LINE">LINE</option>
+          <option value="BAR">BAR</option>
+        </select>
+
+        <select id="chart-type-all">
+          <option value="BAR">BAR</option>
+          <option value="LINE">LINE</option>
+        </select>
+      </div>
+      <div id="pie-chat"></div>
+    </nav>
+
+    {% block content%}{% endblock %}
+    <script type="text/javascript">
+                   const deaths = [
+                       {% for item in deaths %}
+                         "{{ item }}",
+                        {% endfor %}
+                   ]
+                   const confirmed = [
+                       {% for item in confirmed %}
+                         "{{ item }}",
+                        {% endfor %}
+                   ]
+
+                   const recoveries = [
+                       {% for item in recoveries %}
+                         "{{ item }}",
+                        {% endfor %}
+                   ]
+                   const labels = [
+                     {% for item in provinces %}
+                         "{{ item }}",
+                     {% endfor %}
+                   ]
+
+                   // variables
+                   const pieChart = document.getElementById("pie-chart")
+                   const barChart = document.getElementById("bar-chart")
+                   steps = 10;
+                   max = 1000;
+
+                   const getBarData = ()=>{
+                    return {
+                     labels,
+                     datasets:[
+                     {
+                         label: "deaths",
+                         backgroundColor: "red",
+                         data : deaths
+                     },
+                     {
+                         label: "recoveries",
+                         backgroundColor: "green",
+                         data : recoveries
+                     },
+                     {
+                         label: "confirmed",
+                         backgroundColor: "orange",
+                         data : confirmed
+                     }
+                     ]
+                   }
+                   }
+                   const getLineData = ()=>{
+                    colors = ["green", "purple", "yellow", "lightseagreen", "cornflowerblue", "pink", "blue", "brown", "black"]
+                    return {
+              labels: ["confirmed", "deaths", "recoveries"],
+                datasets: labels.map((label, index)=>{
+                  data = [confirmed[index], deaths[index], recoveries[index]]
+                  return {
+                    label,
+                    data,
+                    fill: false,
+                    borderColor: colors[index]
+                  }
+                })
+              }
+      };
+
+                   const getPieData = (province)=>{
+                     const provinceIndex = labels.indexOf(province)
+                       if(provinceIndex === -1) return
+
+                       return{
+                         labels: ["confirmed", "deaths", "recoveries"],
+                         datasets: [{
+                            label: 'Province',
+                            data: [confirmed[provinceIndex], deaths[provinceIndex], recoveries[provinceIndex]],
+                            backgroundColor: ["orange", "red", "green"],
+                            hoverOffset: 4
+                          }]
+                          }
+                        }
+
+                     function plotPieChart (data, chart, province){
+                      document.getElementById("bar-chart").style.display = "none"
+                      document.getElementById("pie-chart").style.display = "flex"
+                       new Chart(chart,{
+                         type: "pie",
+                         data,
+                         options: {
+                        legend: { display: true, position: "bottom" },
+                        title: {
+                          display: true,
+                          text: `Covid 19 cases in South Africa (${province}).`
+                        }
+                    }
+                       })
+                     }
+
+                     const getLineDataForAProvince = (province)=>{
+                      const provinceIndex = labels.indexOf(province)
+                       if(provinceIndex === -1) return
+
+                       return{
+                         labels: ["confirmed", "deaths", "recoveries"],
+                         datasets: [{
+                            label: 'Province',
+                            data: [confirmed[provinceIndex], deaths[provinceIndex], recoveries[provinceIndex]],
+                            backgroundColor: ["orange", "red", "green"],
+                            hoverOffset: 4
+                          }]
+                          }
+                    }
+
+                     function plotLineChartForAProvince (data, chart, province){
+                      document.getElementById("bar-chart").style.display = "none"
+                      document.getElementById("pie-chart").style.display = "flex"
+                       new Chart(chart,{
+                         type: "line",
+                         data,
+                         options: {
+                        legend: { display: true, position: "bottom" },
+                        title: {
+                          display: true,
+                          text: `Covid 19 cases in South Africa (${province}).`
+                        }
+                    }
+                       })
+                     }
+                      function plotLineGraph (data, chart){
+                        new Chart(chart, {
+                        type: 'line',
+                        data,
+                        options: {
+                        legend: { display: true, position: "bottom" },
+                        title: {
+                          display: true,
+                          text: 'Covid 19 cases in South African Provinces.'
+                         }
+                         }
+                       })
+                      }
+                     function plotBarChat (data, chart){
+                      document.getElementById("pie-chart").style.display = "none"
+                      document.getElementById("bar-chart").style.display = "flex"
+                       new Chart(chart, {
+                        type: 'bar',
+                        data,
+                        options: {
+                        legend: { display: true, position: "bottom" },
+                        title: {
+                          display: true,
+                          text: 'Covid 19 cases in South African Provinces.'
+                        }
+                        }
+                       })
+                     }
+
+                     function plotBarChatForAProvince (data, chart, province){
+                      document.getElementById("bar-chart").style.display = "none"
+                      document.getElementById("pie-chart").style.display = "flex"
+                       new Chart(chart, {
+                        type: 'bar',
+                        data,
+                        options: {
+                        legend: { display: false, position: "bottom" },
+                        title: {
+                          display: true,
+                          text: `Covid 19 cases in South Africa (${province}).`
+                        }
+                    }
+                       })
+                     }
+                   plotBarChat(getBarData(), barChart)
+                   document.getElementById("province").addEventListener('change',(e)=>{
+                     const province = e.target.value
+                     if(province === "ALL PROVINCES"){
+                      document.getElementById('chart-type-one').style.display = "none"
+                      document.getElementById('chart-type-all').style.display = "flex"
+
+                       plotBarChat(getBarData(), barChart)
+                       return
+                     }
+                    document.getElementById('chart-type-all').style.display = "none"
+                    document.getElementById('chart-type-one').style.display = "flex"
+                    const type = document.getElementById("chart-type-one").valu
+                     plotPieChart(getPieData(province), pieChart, province)
+                    })
+
+                   document.getElementById("chart-type-all").addEventListener('change',(e)=>{
+                     const type = e.target.value
+                     document.getElementById("pie-chart").style.display = "none"
+                        document.getElementById("bar-chart").style.display = "none"
+                        document.getElementById("bar-chart").style.display = "flex"
+                      if(type=== "LINE"){
+                        plotLineGraph(getLineData(), barChart)
+                        return
+                      }
+                      plotBarChat(getBarData(), barChart)
+                   })
+
+                   document.getElementById("chart-type-one").addEventListener('change',(e)=>{
+                     const type = e.target.value
+                     const province = document.getElementById("province").value
+                     if(type === "BAR"){
+                      plotBarChatForAProvince(getLineDataForAProvince(province), pieChart, province)
+                        return
+                    }else if(type === "LINE"){
+                     plotLineChartForAProvince(getLineDataForAProvince(province), pieChart, province)
+                     return
+                    }
+                     plotPieChart(getPieData(province), pieChart, province)
+                   })
+    </script>
+    <script src="{{url_for('static', filename='js/index.js')}}"></script>
   </body>
 </html>

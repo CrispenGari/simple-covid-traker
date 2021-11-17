@@ -1,12 +1,10 @@
 from flask import Flask, render_template
 import numpy as np
-import pandas as pd 
+import pandas as pd
 import folium
 from dataset import CovidData
 # Reading the dataframe
-df = pd.read_csv("./files/covid-19-dataset-1.csv")
 
-za_df = df.loc[df.Country_Region == "South Africa"]
 za_lat = -30.559989
 za_long = 22.937508
 
@@ -19,10 +17,23 @@ za_map = folium.Map(location=[za_lat, za_long], zoom_start=6)
 def circle_maker(x):
     pass
 
+provinces = list()
+deaths = list()
+confirmed = list()
+recoveries = list()
+
+for province in markers_data:
+    # province = ['EASTERN CAPE', '220', '4', '9', -31.553917, 28.210587]
+    p, c, d, r, _, __ = province
+    provinces.append(p)
+    deaths.append(d)
+    confirmed.append(c)
+    recoveries.append(r)
+
+
 for index, marker in enumerate(markers_data):
     colors = ["green", "purple", "yellow", "lightseagreen", "cornflowerblue", "pink", "YlGn", "brown", "black"]
     color = colors[index]
-
     html = f"""
     <body style="background-color: black;padding:0; ">
     <b style="color: white;">{marker[0]}</b>
@@ -47,10 +58,20 @@ html_map=za_map._repr_html_()
 app = Flask(__name__)
 app.config.from_object("config.Development")
 
-
 @app.route('/', methods=["GET", "POST"])
 def home():
-    return render_template("html/index.html", cmap=html_map, data=stats_data)
+    return render_template("html/index.html", cmap=html_map, data=stats_data, 
+        provinces=provinces,
+        deaths=deaths,
+        recoveries=recoveries,
+        confirmed=confirmed
+    ), 200
+
+@app.route('/about', methods=["GET", "POST"])
+def about():
+    return "About", 200
+
+
 
 if __name__ == "__main__":
     app.run(port=3000)
