@@ -1,18 +1,34 @@
 {% extends 'base.html' %} {%block title%} Covid-19 Interactive Dashboard
 {%endblock%} {%block content%}
 <div class="app">
-  <div class="app__map__chat">
-    <div class="app__map">{{cmap | safe}}</div>
-    <div class="app__chart">
-      <h1>Summary on covid-19 Statistics in South Africa</h1>
-      <canvas id="bar-chart" class="chart"></canvas>
-      <canvas id="pie-chart" class="chart"></canvas>
+  <div class="app__top">
+    <div class="app__map__chat">
+      <div class="app__map">{{cmap | safe}}</div>
+      <div class="app__chart">
+        <h1>Summary on covid-19 Statistics in South Africa</h1>
+        <canvas id="bar-chart" class="chart"></canvas>
+        <canvas id="pie-chart" class="chart"></canvas>
+      </div>
+    </div>
+    <div class="app__summary__stats">
+      <div class="app__card">
+        <h1>confirmed</h1>
+        <p>{{ total_confirmed }}</p>
+      </div>
+      <div class="app__card">
+        <h1>deaths</h1>
+        <p>{{ total_deaths }}</p>
+      </div>
+      <div class="app__card">
+        <h1>recoveries</h1>
+        <p>{{ total_recoveries }}</p>
+      </div>
     </div>
   </div>
 
   <div class="app__table">
     <h1>Covid-19 statistics in South Africa</h1>
-    <table border="1">
+    <table>
       <thead>
         {% for row in data %} {% if loop.first %}
         <tr>

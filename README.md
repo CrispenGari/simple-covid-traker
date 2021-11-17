@@ -79,5 +79,5 @@ For data visualization in the DOM using the flask templates, we are going to use
 We are going to add the following CDN in the `base.html` file.
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
 ```

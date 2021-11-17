@@ -12,10 +12,6 @@
       rel="stylesheet"
       href="{{url_for('static', filename='css/index.css')}}"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"
-    />
     <title>{% block title%}{% endblock %}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
   </head>
@@ -60,23 +56,27 @@
         <li>Contact</li>
       </ul>
       <div class="nav__right">
-        <h1>select province</h1>
-        <select id="province">
-          <option value="ALL PROVINCES">ALL PROVINCES</option>
-          {% for item in provinces %}
-          <option value="{{item}}" }>{{item}}</option>
-          {% endfor %}
-        </select>
-        <select id="chart-type-one">
-          <option value="PIE">PIE</option>
-          <option value="LINE">LINE</option>
-          <option value="BAR">BAR</option>
-        </select>
-
-        <select id="chart-type-all">
-          <option value="BAR">BAR</option>
-          <option value="LINE">LINE</option>
-        </select>
+        <div class="nav__seletect__container">
+          <h1>select province</h1>
+          <select id="province">
+            <option value="ALL PROVINCES">ALL PROVINCES</option>
+            {% for item in provinces %}
+            <option value="{{item}}" }>{{item}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="nav__seletect__container">
+          <h1>select type</h1>
+          <select id="chart-type-one">
+            <option value="PIE">PIE</option>
+            <option value="LINE">LINE</option>
+            <option value="BAR">BAR</option>
+          </select>
+          <select id="chart-type-all">
+            <option value="BAR">BAR</option>
+            <option value="LINE">LINE</option>
+          </select>
+        </div>
       </div>
       <div id="pie-chat"></div>
     </nav>
@@ -255,12 +255,12 @@
                        })
                      }
                    plotBarChat(getBarData(), barChart)
-                   document.getElementById("province").addEventListener('change',(e)=>{
+                   document.getElementById("province")
+                   .addEventListener('change',(e)=>{
                      const province = e.target.value
                      if(province === "ALL PROVINCES"){
                       document.getElementById('chart-type-one').style.display = "none"
                       document.getElementById('chart-type-all').style.display = "flex"
-
                        plotBarChat(getBarData(), barChart)
                        return
                      }
@@ -281,7 +281,6 @@
                       }
                       plotBarChat(getBarData(), barChart)
                    })
-
                    document.getElementById("chart-type-one").addEventListener('change',(e)=>{
                      const type = e.target.value
                      const province = document.getElementById("province").value

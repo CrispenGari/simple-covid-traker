@@ -58,13 +58,20 @@ html_map=za_map._repr_html_()
 app = Flask(__name__)
 app.config.from_object("config.Development")
 
+_, total_confirmed, total_deaths, total_recoveries = stats_data[-1]
+
 @app.route('/', methods=["GET", "POST"])
 def home():
-    return render_template("html/index.html", cmap=html_map, data=stats_data, 
+    return render_template("html/index.html", 
+    cmap=html_map, 
+    data=stats_data, 
         provinces=provinces,
         deaths=deaths,
         recoveries=recoveries,
-        confirmed=confirmed
+        confirmed=confirmed,
+        total_confirmed = total_confirmed,
+        total_deaths = total_deaths,
+        total_recoveries = total_recoveries
     ), 200
 
 @app.route('/about', methods=["GET", "POST"])
